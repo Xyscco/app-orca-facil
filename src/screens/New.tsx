@@ -8,9 +8,9 @@ import { Button } from "../components/Button";
 import { Header } from "../components/Header";
 import { Input } from "../components/Input";
 import { InputNumber } from '../components/inputs/InputNumber';
-import { InputMoney } from '../components/inputs/InputMoney';
 import { ProdutoCard, Produto } from '../components/ProdutoCard';
 import { EmptyList } from '../components/EmptyList';
+import InputMask from '../components/inputs/InputMask';
 
 export function New() {
 
@@ -202,11 +202,11 @@ export function New() {
                                         value={quantidade}
                                     />
 
-                                    <InputMoney
-                                        w="50%"
-                                        mb={2}
-                                        placeholder="Valor"
-                                        onChangeText={setValor}
+                                    <InputMask
+                                        mask="currency"
+                                        placeholder="R$ 0,00"
+                                        placeholderTextColor="#8D8D99"
+                                        inputMaskChange={setValor}
                                         value={valor}
                                     />
                                 </HStack>
@@ -220,10 +220,18 @@ export function New() {
                                     value={cliente}
                                 />
 
-                                <Input
+                                {/* <Input
                                     mb={2}
                                     placeholder="Telefone"
                                     onChangeText={setFoneCliente}
+                                    value={foneCliente}
+                                /> */}
+
+                                <InputMask
+                                    mask="phone"
+                                    placeholder="Telefone"
+                                    placeholderTextColor="#8D8D99"
+                                    inputMaskChange={setFoneCliente}
                                     value={foneCliente}
                                 />
 

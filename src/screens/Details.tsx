@@ -64,72 +64,104 @@ export function Details() {
         }
 
         var cliente = orcamento.cliente;
-        var data = Moment(orcamento.data).format('DD/MM/YYYY hh:mm');
+        var data = Moment(orcamento.data).format('DD/MM/YYYY');
+        var endereco = orcamento.endCliente;
+        var telefone = orcamento.foneCliente;
+        var total = 0;
+
+        orcamento.produtosServicos.forEach(produto => {
+            total += (parseInt(produto.quantidade) * parseFloat(produto.valor))
+        })
 
         const html = `
-            <!DOCTYPE html>
-            <html>
-
-            <head>
-            <style>
-                .body {
-                    padding: 0;
-                background-color: black;
-                color: #dddddd;
-                }
-
-                .table {
-                color: black;
-                background-color: gray;
-                padding: 10px
-                }
-
-                .table table {
-                font-family: arial, sans-serif;
-                border-collapse: collapse;
-                width: 100%;
-                }
-
-
-                td,
-                th {
-                border: 1px solid #dddddd;
-                text-align: left;
-                padding: 8px;
-                }
-
-                tr:nth-child(even) {
-                background-color: #dddddd;
-                }
-            </style>
-            </head>
-
-            <body class="body">
-
-            <h2>Orçamento</h2>
-            <div style="display: flex; flex-direction: column;">
-                <span>Cliente: ${cliente}</span>
-                <span>Data: ${data}</span>
-            </div>
-
-            <hr>
-
-            <div class="table">
-                <table>
-                <tr>
-                    <th>Qtd</th>
-                    <th>Descrição</th>
-                    <th>Valor Unitário</th>
-                    <th>Valor Total</th>
-                </tr>
-                ${table}
-                </table>
-            </div>
-
-
-            </body>
-
-            </html>
+        <!DOCTYPE html>
+        <html>
+        
+        <head>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,500;1,200&family=Oswald:wght@200;300;400;500;600;700&family=Roboto:wght@400;700&display=swap');
+            .body {
+              font-family: 'Roboto', sans-serif;
+              color: #000;
+            }
+        
+            .img {
+              display: flex;
+              justify-content: space-around;
+            }
+        
+            .table {
+              color: black;
+              padding: 10px
+            }
+        
+            .table table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+        
+            td,
+            th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+            }
+        
+            tr:nth-child(even) {
+              background-color: #dddddd;
+            }
+        
+            .total {
+              height: 40px;
+              display: flex;
+              justify-content: flex-end;
+              background-color: #dddddd;
+              align-items: center;
+              padding: 8px;
+              font-weight: 700;
+            }
+        
+            .money {
+              color: #10b981
+            }
+          </style>
+        </head>
+        
+        <body class="body">
+          <div class="img">
+            <img src="https://thumbs2.imgbox.com/19/52/qfsnexV8_t.png"/>
+          </div>
+        
+          <h2>Orçamento</h2>
+          <div style="display: flex; flex-direction: column;">
+            <span>Cliente: ${cliente}</span>
+            <span>Telefone: ${telefone}</span>
+            <span>Data: ${data}</span>
+            <span>Endereço: ${endereco}</span>
+          </div>
+        
+          <hr>
+        
+          <div class="table">
+            <table>
+              <tr>
+                <th>Qtd</th>
+                <th>Descrição</th>
+                <th>Valor Unitário</th>
+                <th>Valor Total</th>
+              </tr>
+              ${table}
+            </table>
+          </div>
+          <div class="total">
+            Total: <span class="money"> R$ ${total}</span>
+          </div>
+        
+        
+        </body>
+        
+        </html>
           `;
 
         return html;
@@ -153,7 +185,8 @@ export function Details() {
                 <HStack>
                     <VStack w={80}>
                         <Text color="gray.200" fontSize="xl">Cliente: {orcamento.cliente}</Text>
-                        <Text color="gray.200" fontSize="md">Data: {Moment(orcamento.data).format('DD/MM/YYYY hh:mm')}</Text>
+                        <Text color="gray.200" fontSize="xl">Telefone: {orcamento.foneCliente}</Text>
+                        <Text color="gray.200" fontSize="md">Data: {Moment(orcamento.data).format('DD/MM/YYYY')}</Text>
                     </VStack>
                     <VStack mt={4}>
                         <ButtonIcon icon={FilePdf} onPress={printToFile}></ButtonIcon>
